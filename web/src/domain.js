@@ -1,0 +1,9 @@
+export const ACTIVE=['booked','confirmed','arrived','completed'];
+export const specialties=['Medicina general','Odontología','Enfermería'];
+export const roomLabels={free:'Libre',busy:'En atención',transition:'En transición',unavailable:'No disponible'};
+export const appointmentLabels={booked:'Por confirmar',confirmed:'Confirmada',arrived:'Llegada registrada',completed:'Atendida',cancelled:'Cancelada'};
+export const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+export const dateLabel=v=>new Date(v).toLocaleString('es-CL',{timeZone:'America/Santiago',day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'});
+export const dayKey=v=>new Intl.DateTimeFormat('en-CA',{timeZone:'America/Santiago',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date(v));
+export function metrics(data,day){const slots=data.slots.filter(s=>dayKey(s.starts_at)===day);const ids=new Set(slots.map(s=>s.id));const used=data.appointments.filter(a=>ids.has(a.slot_id)&&ACTIVE.includes(a.status));const available=slots.length-used.length;return {total:slots.length,used:used.length,free:available,occupancy:slots.length?Math.round(used.length/slots.length*100):0,completed:used.filter(a=>a.status==='completed').length,waiting:data.waiting.length,reassigned:data.audit_log.filter(e=>e.event==='reassigned'&&ids.has(e.slot_id)).length};}
+export function candidates(data,slot){return data.waiting.filter(w=>w.specialty===slot.specialty&&new Date(w.earliest)<=new Date(slot.starts_at)&&new Date(w.latest)>=new Date(slot.starts_at)&&(!w.old_appointment_id||data.appointments.some(a=>a.id===w.old_appointment_id&&['booked','confirmed'].includes(a.status)&&new Date(data.slots.find(s=>s.id===a.slot_id)?.starts_at)>new Date(slot.starts_at)))).sort((a,b)=>new Date(a.created_at)-new Date(b.created_at));}
