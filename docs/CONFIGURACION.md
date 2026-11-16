@@ -17,7 +17,7 @@ La migración inicial ya está aplicada en este proyecto. **No ejecutarla nuevam
 
 ## 2. Configurar Google OAuth
 
-Se necesita acceso administrativo al proyecto de Google Cloud y a Supabase. Esta parte no quedó configurada.
+Google OAuth ya está activado en Medicita y el primer ingreso real con Google está verificado, con identidad confirmada, sesión y perfil creados. Los pasos siguientes documentan la configuración para mantenerla o reproducirla; requieren acceso administrativo a Google Cloud y Supabase.
 
 1. En Google Cloud configurar la pantalla de consentimiento OAuth con el nombre Medicita.
 2. Crear un cliente OAuth de tipo **Aplicación web**.
@@ -33,7 +33,7 @@ Se necesita acceso administrativo al proyecto de Google Cloud y a Supabase. Esta
 
 ## 3. Primer administrador
 
-Cada usuario nuevo empieza como paciente. Después de que el propietario ingrese con Google, verificar su identidad en Supabase Authentication → Users. Copiar su UUID, no adivinarlo.
+Cada usuario nuevo empieza como paciente. El primer administrador ya fue asignado explícitamente después de verificar su identidad de Google y sesión activa. Para asignar otro administrador, verificar su identidad en Supabase Authentication → Users y copiar su UUID, no adivinarlo.
 
 Desde SQL Editor, como propietario del proyecto:
 
@@ -60,7 +60,9 @@ GitHub Pages aloja HTML/CSS/JS. Supabase ejecuta la base de datos, autenticació
 
 ## 5. Uso inicial
 
-No hay horas reales ni pacientes de prueba insertados en Supabase. El administrador crea las horas desde Agenda → Crear hora. Los tres boxes iniciales son datos de configuración. Sus estados no representan ocupación clínica real hasta que el personal los actualice.
+Existe una primera cuenta real con acceso administrador, creada mediante Google y verificada. Las filas temporales usadas para comprobar el backend se revirtieron. Todavía no hay horas médicas ni citas reales registradas en Supabase. El administrador crea las horas desde Agenda → Crear hora. Los tres boxes iniciales son datos de configuración. Sus estados no representan ocupación clínica real hasta que el personal los actualice.
+
+Las 13 pruebas automatizadas y la compilación están aprobadas. En la base instalada también se comprobaron los permisos y las operaciones de reservas y ofertas con roles simulados en una transacción revertida. Queda pendiente recorrer reserva persistente y reasignación desde dos navegadores con cuentas Google reales; no se verificaron dispositivos físicos iOS/Android.
 
 ## Costos
 

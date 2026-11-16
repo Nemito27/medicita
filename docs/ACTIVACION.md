@@ -1,6 +1,8 @@
 # Activación de cuentas reales
 
-La rama `real-accounts` retira los accesos y datos simulados. Todavía no es una activación completada: Google OAuth y el primer administrador deben verificarse antes de desplegarla.
+La versión de cuentas reales retira los accesos y datos simulados. Google OAuth está activado, el primer ingreso con Google se verificó y el primer administrador fue asignado después de comprobar su identidad y sesión.
+
+Se aprobaron 13 pruebas automatizadas y la compilación. Las operaciones del backend instalado y el aislamiento entre pacientes se comprobaron con roles simulados en SQL y filas temporales que se revirtieron. El recorrido completo desde dos navegadores con cuentas Google reales y las pruebas en dispositivos físicos siguen pendientes.
 
 ## Configuración exacta
 
@@ -31,7 +33,9 @@ El callback de Google termina en `/auth/v1/callback`; la URL de regreso de la ap
 
 Referencias oficiales: [Supabase: acceso con Google](https://supabase.com/docs/guides/auth/social-sign-in/auth-google) y [Google: crear credenciales OAuth](https://developers.google.com/identity/protocols/oauth2/web-server#creatingcred).
 
-## Prueba de aceptación antes de publicar
+## Recorrido de aceptación con cuentas reales
+
+Los dos primeros pasos están verificados. Los pasos de agenda, reserva y reasignación siguientes permiten completar la comprobación desde dos navegadores usando horarios que el centro realmente quiera ofrecer.
 
 1. Ingresar con la cuenta Google del propietario y comprobar que se crea un perfil paciente.
 2. Verificar el UUID y correo autenticado antes de asignar explícitamente el rol administrador. No asignar por datos editables del perfil.
