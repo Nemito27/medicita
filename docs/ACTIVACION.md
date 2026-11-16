@@ -4,18 +4,32 @@ La rama `real-accounts` retira los accesos y datos simulados. Todavía no es una
 
 ## Configuración exacta
 
-En Google Cloud, crear un cliente OAuth de tipo Aplicación web para Medicita:
+### Crear el cliente de Google desde cero
+
+1. Abrir [Google Auth Platform](https://console.cloud.google.com/auth/overview) con la cuenta propietaria. Crear o seleccionar el proyecto **Medicita**.
+2. Si aparece **Comenzar / Get started**, registrar el nombre **Medicita**, el correo de asistencia y el correo de contacto. Elegir audiencia **Externa**.
+3. En **Acceso a los datos / Data Access**, usar solamente `openid`, `userinfo.email` y `userinfo.profile`.
+4. En **Público / Audience**, si la app está en modo de prueba, agregar el correo del propietario y la segunda cuenta que realizará las pruebas como usuarios de prueba. El acceso para cualquier persona se habilita después desde esta sección, según los requisitos de Google.
+5. Abrir **Clientes / Clients → Crear cliente**. Elegir **Aplicación web** y nombre **Medicita web**.
+6. Copiar exactamente estos valores:
 
 - Origen JavaScript: `https://nemito27.github.io`
 - URI de redirección: `https://dzkpnmqqadujexkalqrt.supabase.co/auth/v1/callback`
-- Alcances: `openid`, `email`, `profile`.
 
-En Supabase → Authentication → Sign In / Providers → Google, introducir Client ID y Client Secret y activar Google. El secreto permanece exclusivamente en Supabase, nunca en GitHub o en el chat.
+7. Crear el cliente y conservar de forma privada su **Client ID** y **Client Secret**. Google puede mostrar el secreto solamente al crearlo.
 
-En Authentication → URL Configuration:
+### Guardar la configuración en Supabase
+
+Abrir [proveedores de Medicita](https://supabase.com/dashboard/project/dzkpnmqqadujexkalqrt/auth/providers). En **Google**, introducir **Client ID** y **Client Secret**, activar el proveedor y guardar. El secreto permanece exclusivamente en Supabase, nunca en GitHub o en el chat.
+
+En [Authentication → URL Configuration](https://supabase.com/dashboard/project/dzkpnmqqadujexkalqrt/auth/url-configuration):
 
 - Site URL: `https://nemito27.github.io/medicita/`
 - Redirect URLs: `https://nemito27.github.io/medicita/`
+
+El callback de Google termina en `/auth/v1/callback`; la URL de regreso de la app termina en `/medicita/`. Cada uno va en el campo indicado arriba.
+
+Referencias oficiales: [Supabase: acceso con Google](https://supabase.com/docs/guides/auth/social-sign-in/auth-google) y [Google: crear credenciales OAuth](https://developers.google.com/identity/protocols/oauth2/web-server#creatingcred).
 
 ## Prueba de aceptación antes de publicar
 
